@@ -107,7 +107,6 @@ if loyverse_img_file and paper_img_file:
     # 4. 全品項自動對賬邏輯中心
     st.subheader("📊 最終全品項雙流向對賬分析結果")
     
-    # 建立一個方便格式化左邊箱數顯示的函式，原汁原味呈現 - 號和原始數字
     def format_paper_box(out_val, in_val):
         if in_val != 0:
             return f"OUT: {int(out_val)} 箱 / IN: {int(in_val)} 箱"
@@ -145,7 +144,7 @@ if loyverse_img_file and paper_img_file:
         res_data.append({
             "商品項目": item["name"],
             "Loyverse 系統銷量（換算後）": item["system"],
-            "紙張手寫記錄（原始呈现）": item["paper"],
+            "紙張手寫記錄（原始呈現）": item["paper"],
             "對賬狀態": status
         })
     
@@ -158,3 +157,5 @@ if loyverse_img_file and paper_img_file:
     st.table(res_df.style.map(color_status, subset=['對賬狀態']))
     
     if has_error:
+        st.error("🚨 警告：系統發現有商品數據對不上，請立刻核對實體倉庫！")
+    else:
