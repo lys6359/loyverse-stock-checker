@@ -20,18 +20,20 @@ if loyverse_img_file and paper_img_file:
         st.write("### 📦 1. 左邊欄位（整箱出貨 - Ctn）")
         st.info("系統會依據商品種類，自動將箱數換算為總件數（Bottle 乘 12，Tin 乘 24）")
         
-        # 根據你上傳的最新紙張數據作為預設值
         p_1602_ctn = st.number_input("紙張左邊：1602 LAGER TIN 出貨箱數", min_value=0, value=3)
         l_1602_ctn = st.number_input("Loyverse 系統：1602 啤酒賣出箱數 (Ctn)", min_value=0, value=3)
         
         p_anchor_ctn = st.number_input("紙張左邊：ANCHOR TIN 出貨箱數", min_value=0, value=0)
         l_anchor_ctn = st.number_input("Loyverse 系統：Anchor 啤酒賣出箱數 (Ctn)", min_value=0, value=5)
         
+        p_tiger_ctn = st.number_input("紙張左邊：TIGER TIN 出貨箱數", min_value=0, value=5)
+        l_tiger_ctn = st.number_input("Loyverse 系統：Tiger 罐裝賣出箱數 (Ctn)", min_value=0, value=5)
+        
         p_tiger_botol_ctn = st.number_input("紙張左邊：TIGER BOTOL 出貨箱數", min_value=0, value=1)
         l_tiger_botol_ctn = st.number_input("Loyverse 系統：Tiger 瓶裝賣出箱數 (Ctn)", min_value=0, value=1)
 
     with col2:
-        st.write("### 支/包/罐）")
+        st.write("### 2. 右邊欄位（散件出貨 - 支/包/罐）")
         st.info("這裡記錄散件出貨，系統會自動將 Loyverse 的 1 Set 換算為 3 罐進行核對")
         
         p_1602_tin = st.number_input("紙張右邊：1602 LAGER TIN 出貨罐數", min_value=0, value=12)
@@ -40,8 +42,14 @@ if loyverse_img_file and paper_img_file:
         p_anchor_tin = st.number_input("紙張右邊：ANCHOR TIN 出貨罐數", min_value=0, value=3)
         l_anchor_set = st.number_input("Loyverse 系統：Anchor 賣出組數 (Set)", min_value=0, value=1)
         
+        p_tiger_tin = st.number_input("紙張右邊：TIGER TIN 出貨罐數", min_value=0, value=1)
+        l_tiger_tin_single = st.number_input("Loyverse 系統：Tiger 賣出單罐數", min_value=0, value=1)
+        
         p_anggur = st.number_input("紙張右邊：ANGGUR 紅酒出貨瓶數", min_value=0, value=11)
         l_anggur = st.number_input("Loyverse 系統：Anggur 紅酒賣出瓶數", min_value=0, value=11)
+        
+        p_soju = st.number_input("紙張右邊：SOJU 韓國燒酒出貨瓶數", min_value=0, value=1)
+        l_soju = st.number_input("Loyverse 系統：Soju 賣出瓶數", min_value=0, value=1)
         
         st.write("---")
         p_r129 = st.number_input("紙張右邊：香菸 RM12.90 出貨包數", min_value=0, value=1)
@@ -61,8 +69,11 @@ if loyverse_img_file and paper_img_file:
         {"name": "1602 啤酒 (單罐 - 系統自動換算 1 Set = 3罐)", "system": l_1602_set * SET_TO_TIN_RATIO, "paper": p_1602_tin, "unit": "罐"},
         {"name": "Anchor 啤酒 (整箱 - 每箱24罐)", "system": l_anchor_ctn, "paper": p_anchor_ctn, "unit": "箱"},
         {"name": "Anchor 啤酒 (單罐 - 系統自動換算 1 Set = 3罐)", "system": l_anchor_set * SET_TO_TIN_RATIO, "paper": p_anchor_tin, "unit": "罐"},
+        {"name": "Tiger 罐裝啤酒 (整箱 - 每箱24罐)", "system": l_tiger_ctn, "paper": p_tiger_ctn, "unit": "箱"},
+        {"name": "Tiger 罐裝啤酒 (單罐)", "system": l_tiger_tin_single, "paper": p_tiger_tin, "unit": "罐"},
         {"name": "Tiger 瓶裝啤酒 (整箱 - 每箱12瓶)", "system": l_tiger_botol_ctn, "paper": p_tiger_botol_ctn, "unit": "箱"},
         {"name": "Anggur 紅酒 (Bottle)", "system": l_anggur, "paper": p_anggur, "unit": "支"},
+        {"name": "Soju 燒酒 (Bottle)", "system": l_soju, "paper": p_soju, "unit": "支"},
         {"name": "香菸 RM12.90", "system": l_r129, "paper": p_r129, "unit": "包"},
         {"name": "香菸 RM16.70", "system": l_r167, "paper": p_r167, "unit": "包"},
         {"name": "香菸 RM18.20", "system": l_r182, "paper": p_r182, "unit": "包"},
