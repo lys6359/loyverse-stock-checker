@@ -123,7 +123,7 @@ if loyverse_file and paper_file:
                 diff = p_calc - sys_v
                 return "✅ 完全吻合" if diff == 0 else f"⚠️ 數據不符 (差了 {int(diff)} {unit_name})"
 
-            # 採用百分之百不可能產生括號未閉合錯誤的獨立字典型排版結構
+            # 徹底修復第 135 行的重複字鍵打字錯誤，代碼完美對齊
             data_list = [
                 {"商品項目": "1602 啤酒 (整箱 Carton)", "Loyverse 系統銷量": f"{int(l_1602_ctn)} 箱", "紙張記錄（AI 提取）": format_p(p_1602_out, p_1602_in), "對賬狀態": get_status(p_1602_out - p_1602_in, l_1602_ctn, "箱")},
                 {"商品項目": "1602 啤酒 (單罐 Tin)", "Loyverse 系統銷量": f"{int(l_1602_set * SET_TO_TIN_RATIO)} 罐", "紙張記錄（AI 提取）": f"{int(p_1602_tin)} 罐", "對賬狀態": get_status(p_1602_tin, l_1602_set * SET_TO_TIN_RATIO, "罐")},
@@ -133,7 +133,7 @@ if loyverse_file and paper_file:
                 {"商品項目": "Tiger 瓶裝啤酒 (整箱 Carton)", "Loyverse 系統銷量": f"{int(l_tiger_botol_ctn)} 箱", "紙張記錄（AI 提取）": format_p(p_tiger_botol_out, p_tiger_botol_in), "對賬狀態": get_status(p_tiger_botol_out - p_tiger_botol_in, l_tiger_botol_ctn, "箱")},
                 {"商品項目": "Tiger 瓶裝啤酒 (Bottle 散瓶)", "Loyverse 系統銷量": f"{int(l_tiger_botol_single)} 支", "紙張記錄（AI 提取）": f"{int(p_tiger_botol_single_out)} 支", "對賬狀態": get_status(p_tiger_botol_single_out, l_tiger_botol_single, "支")},
                 {"商品項目": "Carlsberg Green (單罐 Tin)", "Loyverse 系統銷量": f"{int(l_carlsberg_tin)} 罐", "紙張記錄（AI 提取）": f"{int(p_carlsberg)} 罐", "對賬狀態": get_status(p_carlsberg, l_carlsberg_tin, "罐")},
-                {"商品項目": "Guinness 啤酒 (單罐 Tin)", "商品項目": "Guinness 啤酒 (單罐 Tin)", "Loyverse 系統銷量": f"{int(l_guinness_tin)} 罐", "紙張記錄（AI 提取）": f"{int(p_guinness)} 罐", "對賬狀態": get_status(p_guinness, l_guinness_tin, "罐")},
+                {"商品項目": "Guinness 啤酒 (單罐 Tin)", "Loyverse 系統銷量": f"{int(l_guinness_tin)} 罐", "紙張記錄（AI 提取）": f"{int(p_guinness)} 罐", "對賬狀態": get_status(p_guinness, l_guinness_tin, "罐")},
                 {"商品項目": "Anggur 紅酒 (整箱 Carton)", "Loyverse 系統銷量": f"{int(l_anggur_ctn)} 箱", "紙張記錄（AI 提取）": format_p(p_anggur_out, p_anggur_in), "對賬狀態": get_status(p_anggur_out - p_anggur_in, l_anggur_ctn, "箱")},
                 {"商品項目": "Anggur 紅酒 (Bottle 散瓶)", "Loyverse 系統銷量": f"{int(l_anggur_single)} 支", "紙張記錄（AI 提取）": f"{int(p_anggur_single)} 支", "對賬狀態": get_status(p_anggur_single, l_anggur_single, "支")},
                 {"商品項目": "Soju 燒酒 (Bottle)", "Loyverse 系統銷量": f"{int(l_soju)} 支", "紙張記錄（AI 提取）": f"{int(p_soju)} 支", "對賬狀態": get_status(p_soju, l_soju, "支")},
