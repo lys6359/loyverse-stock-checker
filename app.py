@@ -120,7 +120,6 @@ if loyverse_img_file and paper_img_file:
         diff = p_calc - sys_v
         return "✅ 完全吻合" if diff == 0 else f"⚠️ 數據不符 (差了 {int(diff)} {unit_name})"
 
-    # 平鋪直述結構，100% 保證順暢渲染
     data_list = []
     data_list.append({"商品項目": "1602 啤酒 (整箱 Carton)", "Loyverse 系統銷量": f"{int(l_1602_ctn)} 箱", "紙張手寫記錄": format_p(p_1602_out, p_1602_in), "對賬狀態": get_status(p_1602_out - p_1602_in, l_1602_ctn, "箱")})
     data_list.append({"商品項目": "1602 啤酒 (單罐 Tin)", "Loyverse 系統銷量": f"{int(l_1602_set * SET_TO_TIN_RATIO)} 罐", "紙張手寫記錄": f"{int(p_1602_tin)} 罐", "對賬狀態": get_status(p_1602_tin, l_1602_set * SET_TO_TIN_RATIO, "罐")})
