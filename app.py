@@ -114,7 +114,7 @@ if loyverse_file and paper_file:
             l_labours_tin = ai_dynamic_extract(loyverse_ocr_results, "LABOURS", "single_out", 30)
             p_labours_tin = ai_dynamic_extract(paper_ocr_results, "LABOURS", "single_out", 30)
             
-            # 7. DRINKS & ROKOK - 完美修復變數錯誤與標點符號
+            # 7. DRINKS & ROKOK - 徹底清理乾淨多餘變數，確保結構完整
             l_redbull = ai_dynamic_extract(loyverse_ocr_results, "REDBULL", "single_out", 2)
             p_redbull = ai_dynamic_extract(paper_ocr_results, "RED BULL", "single_out", 2)
             l_blackjack = ai_dynamic_extract(loyverse_ocr_results, "BLACKJACK", "single_out", 2)
