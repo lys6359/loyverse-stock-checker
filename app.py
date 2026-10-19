@@ -60,6 +60,12 @@ if loyverse_img_file and paper_img_file:
 
     with col2:
         st.write("### 2. 右邊欄位 - 啤酒散件賣出 (OUT)")
+        
+        st.write("*Tiger Botol (散瓶出貨)*")
+        p_tiger_botol_single_out = st.number_input("紙張右邊：TIGER BOTOL (OUT)", value=16)
+        l_tiger_botol_single = st.number_input("Loyverse：Tiger Botol 散瓶賣出數", value=16)
+        
+        st.write("---")
         p_1602_tin = st.number_input("紙張右邊：1602 LAGER TIN (OUT)", value=12)
         l_1602_set = st.number_input("Loyverse：1602 賣出組數 (1Set=3罐)", value=4)
         
@@ -102,7 +108,7 @@ if loyverse_img_file and paper_img_file:
         l_r167 = st.number_input("Loyverse：香菸 RM16.70 包數", value=2)
         
         p_r182 = st.number_input("紙張右邊：香菸 RM18.20 (OUT)", value=4)
-        l_r182 = st.number_input("Loyverse：香菸 RM18.20 包數", value=4)
+        l_r182 = st.number_input("Loyverse:: 香菸 RM18.20 包數", value=4)
 
     # 4. 全品項自動對賬邏輯中心
     st.subheader("📊 最終全品項雙流向對賬分析結果")
@@ -119,6 +125,7 @@ if loyverse_img_file and paper_img_file:
         {"name": "Anchor 啤酒 (單罐 Tin - 1 Set = 3罐)", "system": f"{int(l_anchor_set * SET_TO_TIN_RATIO)} 罐", "paper": f"{int(p_anchor_tin)} 罐", "diff": p_anchor_tin - (l_anchor_set * SET_TO_TIN_RATIO), "unit": "罐"},
         {"name": "Tiger 罐裝啤酒 (單罐 Tin - 1 Set = 3罐)", "system": f"{int(l_tiger_set * SET_TO_TIN_RATIO)} 罐", "paper": f"{int(p_tiger_tin)} 罐", "diff": p_tiger_tin - (l_tiger_set * SET_TO_TIN_RATIO), "unit": "罐"},
         {"name": "Tiger 瓶裝啤酒 (整箱 Carton)", "system": f"{int(l_tiger_botol_ctn)} 箱", "paper": format_paper_box(p_tiger_botol_out, p_tiger_botol_in), "diff": (p_tiger_botol_out - p_tiger_botol_in) - l_tiger_botol_ctn, "unit": "箱"},
+        {"name": "Tiger 瓶裝啤酒 (Bottle 散瓶)", "system": f"{int(l_tiger_botol_single)} 支", "paper": f"{int(p_tiger_botol_single_out)} 支", "diff": p_tiger_botol_single_out - l_tiger_botol_single, "unit": "支"},
         {"name": "Carlsberg Green (單罐 Tin)", "system": f"{int(l_carlsberg_tin)} 罐", "paper": f"{int(p_carlsberg_tin)} 罐", "diff": p_carlsberg_tin - l_carlsberg_tin, "unit": "罐"},
         {"name": "Guinness 啤酒 (單罐 Tin)", "system": f"{int(l_guinness_tin)} 罐", "paper": f"{int(p_guinness_tin)} 罐", "diff": p_guinness_tin - l_guinness_tin, "unit": "罐"},
         {"name": "Anggur 紅酒 (整箱 Carton)", "system": f"{int(l_anggur_ctn)} 箱", "paper": format_paper_box(p_anggur_out, p_anggur_in), "diff": (p_anggur_out - p_anggur_in) - l_anggur_ctn, "unit": "箱"},
