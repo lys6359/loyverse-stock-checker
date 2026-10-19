@@ -113,30 +113,30 @@ if loyverse_img_file and paper_img_file:
         return f"{int(out_val)} 箱"
 
     check_items = [
-        {"name": "1602 啤酒 (整箱 Carton)", "system": f"{int(l_1602_ctn)} 箱", "paper": format_paper_box(p_1602_out, p_1602_in), "is_match": (p_1602_out - p_1602_in) == l_1602_ctn, "diff": (p_1602_out - p_1602_in) - l_1602_ctn, "unit": "箱"},
-        {"name": "1602 啤酒 (單罐 Tin - 1 Set = 3罐)", "system": f"{int(l_1602_set * SET_TO_TIN_RATIO)} 罐", "paper": f"{int(p_1602_tin)} 罐", "is_match": (l_1602_set * SET_TO_TIN_RATIO) == p_1602_tin, "diff": p_1602_tin - (l_1602_set * SET_TO_TIN_RATIO), "unit": "罐"},
-        {"name": "Anchor 啤酒 (整箱 Carton)", "system": f"{int(l_anchor_ctn)} 箱", "paper": format_paper_box(p_anchor_out, p_anchor_in), "is_match": (p_anchor_out - p_anchor_in) == l_anchor_ctn, "diff": (p_anchor_out - p_anchor_in) - l_anchor_ctn, "unit": "箱"},
-        {"name": "Anchor 啤酒 (單罐 Tin - 1 Set = 3罐)", "system": f"{int(l_anchor_set * SET_TO_TIN_RATIO)} 罐", "paper": f"{int(p_anchor_tin)} 罐", "is_match": (l_anchor_set * SET_TO_TIN_RATIO) == p_anchor_tin, "diff": p_anchor_tin - (l_anchor_set * SET_TO_TIN_RATIO), "unit": "罐"},
-        {"name": "Tiger 罐裝啤酒 (單罐 Tin - 1 Set = 3罐)", "system": f"{int(l_tiger_set * SET_TO_TIN_RATIO)} 罐", "paper": f"{int(p_tiger_tin)} 罐", "is_match": (l_tiger_set * SET_TO_TIN_RATIO) == p_tiger_tin, "diff": p_tiger_tin - (l_tiger_set * SET_TO_TIN_RATIO), "unit": "罐"},
-        {"name": "Tiger 瓶裝啤酒 (整箱 Carton)", "system": f"{int(l_tiger_botol_ctn)} 箱", "paper": format_paper_box(p_tiger_botol_out, p_tiger_botol_in), "is_match": (p_tiger_botol_out - p_tiger_botol_in) == l_tiger_botol_ctn, "diff": (p_tiger_botol_out - p_tiger_botol_in) - l_tiger_botol_ctn, "unit": "箱"},
-        {"name": "Carlsberg Green (單罐 Tin)", "system": f"{int(l_carlsberg_tin)} 罐", "paper": f"{int(p_carlsberg_tin)} 罐", "is_match": l_carlsberg_tin == p_carlsberg_tin, "diff": p_carlsberg_tin - l_carlsberg_tin, "unit": "罐"},
-        {"name": "Guinness 啤酒 (單罐 Tin)", "system": f"{int(l_guinness_tin)} 罐", "paper": f"{int(p_guinness_tin)} 罐", "is_match": l_guinness_tin == p_guinness_tin, "diff": p_guinness_tin - l_guinness_tin, "unit": "罐"},
-        {"name": "Anggur 紅酒 (整箱 Carton)", "system": f"{int(l_anggur_ctn)} 箱", "paper": format_paper_box(p_anggur_out, p_anggur_in), "is_match": (p_anggur_out - p_anggur_in) == l_anggur_ctn, "diff": (p_anggur_out - p_anggur_in) - l_anggur_ctn, "unit": "箱"},
-        {"name": "Anggur 紅酒 (Bottle 散瓶)", "system": f"{int(l_anggur)} 支", "paper": f"{int(p_anggur)} 支", "is_match": l_anggur == p_anggur, "diff": p_anggur - l_anggur, "unit": "支"},
-        {"name": "Soju 燒酒 (Bottle)", "system": f"{int(l_soju)} 支", "paper": f"{int(p_soju)} 支", "is_match": l_soju == p_soju, "diff": p_soju - l_soju, "unit": "支"},
-        {"name": "Red Bull 紅牛 (單罐)", "system": f"{int(l_redbull)} 罐", "paper": f"{int(p_redbull)} 罐", "is_match": l_redbull == p_redbull, "diff": p_redbull - l_redbull, "unit": "罐"},
-        {"name": "Black Jack's (單罐)", "system": f"{int(l_blackjack)} 罐", "paper": f"{int(p_blackjack)} 罐", "is_match": l_blackjack == p_blackjack, "diff": p_blackjack - l_blackjack, "unit": "罐"},
-        {"name": "Labour's 啤酒 (整箱 Carton)", "system": f"{int(l_labours_ctn)} 箱", "paper": format_paper_box(p_labours_out, p_labours_in), "is_match": (p_labours_out - p_labours_in) == l_labours_ctn, "diff": (p_labours_out - p_labours_in) - l_labours_ctn, "unit": "箱"},
-        {"name": "Labour's 啤酒 (單罐 Tin)", "system": f"{int(l_labours_tin)} 罐", "paper": f"{int(p_labours_tin)} 罐", "is_match": l_labours_tin == p_labours_tin, "diff": p_labours_tin - l_labours_tin, "unit": "罐"},
-        {"name": "香菸 RM12.90", "system": f"{int(l_r129)} 包", "paper": f"{int(p_r129)} 包", "is_match": l_r129 == p_r129, "diff": p_r129 - l_r129, "unit": "包"},
-        {"name": "香菸 RM16.70", "system": f"{int(l_r167)} 包", "paper": f"{int(p_r167)} 包", "is_match": l_r167 == p_r167, "diff": p_r167 - l_r167, "unit": "包"},
-        {"name": "香菸 RM18.20", "system": f"{int(l_r182)} 包", "paper": f"{int(p_r182)} 包", "is_match": l_r182 == p_r182, "diff": p_r182 - l_r182, "unit": "包"},
+        {"name": "1602 啤酒 (整箱 Carton)", "system": f"{int(l_1602_ctn)} 箱", "paper": format_paper_box(p_1602_out, p_1602_in), "diff": (p_1602_out - p_1602_in) - l_1602_ctn, "unit": "箱"},
+        {"name": "1602 啤酒 (單罐 Tin - 1 Set = 3罐)", "system": f"{int(l_1602_set * SET_TO_TIN_RATIO)} 罐", "paper": f"{int(p_1602_tin)} 罐", "diff": p_1602_tin - (l_1602_set * SET_TO_TIN_RATIO), "unit": "罐"},
+        {"name": "Anchor 啤酒 (整箱 Carton)", "system": f"{int(l_anchor_ctn)} 箱", "paper": format_paper_box(p_anchor_out, p_anchor_in), "diff": (p_anchor_out - p_anchor_in) - l_anchor_ctn, "unit": "箱"},
+        {"name": "Anchor 啤酒 (單罐 Tin - 1 Set = 3罐)", "system": f"{int(l_anchor_set * SET_TO_TIN_RATIO)} 罐", "paper": f"{int(p_anchor_tin)} 罐", "diff": p_anchor_tin - (l_anchor_set * SET_TO_TIN_RATIO), "unit": "罐"},
+        {"name": "Tiger 罐裝啤酒 (單罐 Tin - 1 Set = 3罐)", "system": f"{int(l_tiger_set * SET_TO_TIN_RATIO)} 罐", "paper": f"{int(p_tiger_tin)} 罐", "diff": p_tiger_tin - (l_tiger_set * SET_TO_TIN_RATIO), "unit": "罐"},
+        {"name": "Tiger 瓶裝啤酒 (整箱 Carton)", "system": f"{int(l_tiger_botol_ctn)} 箱", "paper": format_paper_box(p_tiger_botol_out, p_tiger_botol_in), "diff": (p_tiger_botol_out - p_tiger_botol_in) - l_tiger_botol_ctn, "unit": "箱"},
+        {"name": "Carlsberg Green (單罐 Tin)", "system": f"{int(l_carlsberg_tin)} 罐", "paper": f"{int(p_carlsberg_tin)} 罐", "diff": p_carlsberg_tin - l_carlsberg_tin, "unit": "罐"},
+        {"name": "Guinness 啤酒 (單罐 Tin)", "system": f"{int(l_guinness_tin)} 罐", "paper": f"{int(p_guinness_tin)} 罐", "diff": p_guinness_tin - l_guinness_tin, "unit": "罐"},
+        {"name": "Anggur 紅酒 (整箱 Carton)", "system": f"{int(l_anggur_ctn)} 箱", "paper": format_paper_box(p_anggur_out, p_anggur_in), "diff": (p_anggur_out - p_anggur_in) - l_anggur_ctn, "unit": "箱"},
+        {"name": "Anggur 紅酒 (Bottle 散瓶)", "system": f"{int(l_anggur)} 支", "paper": f"{int(p_anggur)} 支", "diff": p_anggur - l_anggur, "unit": "支"},
+        {"name": "Soju 燒酒 (Bottle)", "system": f"{int(l_soju)} 支", "paper": f"{int(p_soju)} 支", "diff": p_soju - l_soju, "unit": "支"},
+        {"name": "Red Bull 紅牛 (單罐)", "system": f"{int(l_redbull)} 罐", "paper": f"{int(p_redbull)} 罐", "diff": p_redbull - l_redbull, "unit": "罐"},
+        {"name": "Black Jack's (單罐)", "system": f"{int(l_blackjack)} 罐", "paper": f"{int(p_blackjack)} 罐", "diff": p_blackjack - l_blackjack, "unit": "罐"},
+        {"name": "Labour's 啤酒 (整箱 Carton)", "system": f"{int(l_labours_ctn)} 箱", "paper": format_paper_box(p_labours_out, p_labours_in), "diff": (p_labours_out - p_labours_in) - l_labours_ctn, "unit": "箱"},
+        {"name": "Labour's 啤酒 (單罐 Tin)", "system": f"{int(l_labours_tin)} 罐", "paper": f"{int(p_labours_tin)} 罐", "diff": p_labours_tin - l_labours_tin, "unit": "罐"},
+        {"name": "香菸 RM12.90", "system": f"{int(l_r129)} 包", "paper": f"{int(p_r129)} 包", "diff": p_r129 - l_r129, "unit": "包"},
+        {"name": "香菸 RM16.70", "system": f"{int(l_r167)} 包", "paper": f"{int(p_r167)} 包", "diff": p_r167 - l_r167, "unit": "包"},
+        {"name": "香菸 RM18.20", "system": f"{int(l_r182)} 包", "paper": f"{int(p_r182)} 包", "diff": p_r182 - l_r182, "unit": "包"},
     ]
     
     res_data = []
     has_error = False
     for item in check_items:
-        if item["is_match"]:
+        if item["diff"] == 0:
             status = "✅ 完全吻合"
         else:
             status = f"⚠️ 數據不符 (差了 {int(item['diff'])} {item['unit']})"
@@ -159,3 +159,6 @@ if loyverse_img_file and paper_img_file:
     if has_error:
         st.error("🚨 警告：系統發現有商品數據對不上，請立刻核對實體倉庫！")
     else:
+        st.success("🎉 太棒了！今天所有輸入的店鋪商品賬目與紙張點貨 100% 完全吻合，一分不差！")
+else:
+    st.warning("👈 請在左側上傳您的【兩張照片】以解鎖店鋪全品項雙流向對賬面板。")
