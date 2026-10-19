@@ -58,12 +58,12 @@ if loyverse_file and paper_file:
             # 識別第一張圖：Loyverse 截圖
             l_img = Image.open(loyverse_file)
             l_results = reader.readtext(np.array(l_img))
-            loyverse_ocr_results = [res[1] for res in l_results]
+            loyverse_ocr_results = [str(res[1]) for res in l_results]
             
             # 識別第二張圖：手寫點貨紙張
             p_img = Image.open(paper_file)
             p_results = reader.readtext(np.array(p_img))
-            paper_ocr_results = [res[1] for res in p_results]
+            paper_ocr_results = [str(res[1]) for res in p_results]
             
             st.success("🎉 AI 識圖分析成功！數據已完全根據您上傳的新照片完成動態提取與綁定！")
             
@@ -114,7 +114,7 @@ if loyverse_file and paper_file:
             l_labours_tin = ai_dynamic_extract(loyverse_ocr_results, "LABOURS", "single_out", 30)
             p_labours_tin = ai_dynamic_extract(paper_ocr_results, "LABOURS", "single_out", 30)
             
-            # 7. DRINKS & ROKOK - 完美對齊纯數值型變數定義
+            # 7. DRINKS & ROKOK - 100% 語法對齊修正
             l_redbull = ai_dynamic_extract(loyverse_ocr_results, "REDBULL", "single_out", 2)
             p_redbull = ai_dynamic_extract(paper_ocr_results, "RED BULL", "single_out", 2)
             l_blackjack = ai_dynamic_extract(loyverse_ocr_results, "BLACKJACK", "single_out", 2)
