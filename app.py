@@ -4,7 +4,7 @@ import pandas as pd
 st.set_page_config(page_title="Loyverse 店鋪全品項自動對賬系統", layout="wide")
 
 st.title("📸 Loyverse 報表 ⇄ 實體全品項點貨紙張 —— 自動對賬系統")
-st.markdown("💡 **店鋪專屬換算規則**：左邊 Bottle 一箱 12 件；Tin 一箱 24 件；Redbull 到 Strawberry 一箱 12 件。右邊皆為單件。1 Set = 3 件。")
+st.markdown("💡 **店鋪專屬換算規則**：左邊 Bottle 一箱 12 件；Tin 一箱 24 件；Redbull 到 Strawberry (包含 Anggur) 一箱 12 件。右邊皆為單件。1 Set = 3 件。")
 
 SET_TO_TIN_RATIO = 3
 
@@ -15,12 +15,11 @@ paper_img_file = st.sidebar.file_uploader("2. 上傳當天手寫點貨【紙張�
 if loyverse_img_file and paper_img_file:
     st.success("✅ 雙照片已上傳成功！請根據您的實體紙張，在下方確認或微調今日的 OUT (出貨) 數據：")
     
-    # 建立三個分欄讓界面更好看，不擁擠
     col1, col2, col3 = st.columns(3)
     
     with col1:
         st.write("### 📦 1. 左邊欄位 (整箱出貨 - Ctn)")
-        st.write("**【大樽/瓶裝酒 - 每箱12瓶】**")
+        st.write("**【大樽/瓶裝酒類 - 每箱12瓶】**")
         p_heineken_botol_ctn = st.number_input("紙張左邊：HEINEKEN BOTOL 箱數", min_value=-50, max_value=100, value=0)
         l_heineken_botol_ctn = st.number_input("Loyverse：HEINEKEN BOTOL 箱數", min_value=0, value=0)
         
@@ -40,12 +39,16 @@ if loyverse_img_file and paper_img_file:
         p_tiger_ctn = st.number_input("紙張左邊：TIGER TIN 箱數", min_value=-50, max_value=100, value=5)
         l_tiger_ctn = st.number_input("Loyverse：TIGER TIN 箱數", min_value=0, value=5)
 
-        st.write("**【能量飲/調酒 - 每箱12件】**")
+        st.write("**【能量飲/調酒/紅酒類 - 每箱12件】**")
+        # Anggur 箱裝成功歸入此類
+        p_anggur_ctn = st.number_input("紙張左邊：ANGGUR 紅酒箱數", min_value=-50, max_value=100, value=-1)
+        l_anggur_ctn = st.number_input("Loyverse：ANGGUR 紅酒箱數", min_value=-50, value=-1)
+        
         p_labours_ctn = st.number_input("紙張左邊：LABOUR'S 箱數", min_value=-50, max_value=100, value=-4)
         l_labours_ctn = st.number_input("Loyverse：LABOUR'S 箱數", min_value=-50, value=-4)
 
     with col2:
-        st.write("### 支/包/罐）")
+        st.write("### 2. 右邊欄位 (散件出貨 - 支/包/罐）")
         st.write("**【散裝樽裝/罐裝啤酒核對】**")
         p_1602_tin = st.number_input("紙張右邊：1602 LAGER TIN 罐數", min_value=0, value=12)
         l_1602_set = st.number_input("Loyverse：1602 賣出組數 (1Set=3罐)", min_value=0, value=4)
@@ -104,7 +107,8 @@ if loyverse_img_file and paper_img_file:
         {"name": "Tiger 瓶裝啤酒 (整箱 Carton - 12瓶/箱)", "system": l_tiger_botol_ctn, "paper": p_tiger_botol_ctn, "unit": "箱"},
         {"name": "Carlsberg Green (單罐 Tin)", "system": l_carlsberg_tin, "paper": p_carlsberg_tin, "unit": "罐"},
         {"name": "Guinness 啤酒 (單罐 Tin)", "system": l_guinness_tin, "paper": p_guinness_tin, "unit": "罐"},
-        {"name": "Anggur 紅酒 (Bottle)", "system": l_anggur, "paper": p_anggur, "unit": "支"},
+        {"name": "Anggur 紅酒 (整箱 Carton - 12件/箱)", "system": l_anggur_ctn, "paper": p_anggur_ctn, "unit": "箱"},
+        {"name": "Anggur 紅酒 (Bottle 散瓶)", "system": l_anggur, "paper": p_anggur, "unit": "支"},
         {"name": "Soju 燒酒 (Bottle)", "system": l_soju, "paper": p_soju, "unit": "支"},
         {"name": "Red Bull 紅牛 (單罐)", "system": l_redbull, "paper": p_redbull, "unit": "罐"},
         {"name": "Black Jack's (單罐)", "system": l_blackjack, "paper": p_blackjack, "unit": "罐"},
