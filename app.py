@@ -17,11 +17,10 @@ SET_TO_TIN_RATIO = 3
 def load_ai_ocr_engine():
     return easyocr.Reader(['en'], gpu=False)
 
-# 將錯誤處理死死鎖在最頂層，絕不向下蔓延
 try:
     reader = load_ai_ocr_engine()
 except Exception as e:
-    st.error(f"AI 引擎初始化失敗，請檢查 requirements.txt。錯誤: {str(e)}")
+    st.error(f"AI 引擎初始化失敗，請檢查 requirements.txt是否配置正確。錯誤: {str(e)}")
 
 # ================= 2. 核心分析功能定義區 =================
 def ai_dynamic_extract(ocr_text, keyword, mode="single_out", default=0):
@@ -57,7 +56,7 @@ paper_file = st.sidebar.file_uploader("2. 上傳當天手寫點貨【紙張照�
 if loyverse_file and paper_file:
     st.info("🧠 高精視覺 AI 正在深度掃描解析兩張照片中的字跡，請稍候...")
     
-    # 執行真正的 AI 識圖流（完全脫離 try-except 巢狀嵌套，絕不報錯）
+    # 執行真正的 AI 識圖流
     l_img = Image.open(loyverse_file)
     l_results = reader.readtext(np.array(l_img))
     loyverse_ocr_results = [str(res) for res in l_results]
@@ -124,7 +123,7 @@ if loyverse_file and paper_file:
     
     st.subheader("📊 最終全品項雙照片 AI 自動對賬分析結果")
     
-    # 建立平鋪直述的數據清單
+    # 建立獨立附加的資料清單
     data_list = []
     data_list.append({"商品項目": "1602 啤酒 (整箱 Carton)", "Loyverse 系統銷量": f"{int(l_1602_ctn)} 箱", "紙張記錄（AI 提取）": format_p(p_1602_out, p_1602_in), "對賬狀態": get_status(p_1602_out - p_1602_in, l_1602_ctn, "箱")})
     data_list.append({"商品項目": "1602 啤酒 (單罐 Tin)", "Loyverse 系統銷量": f"{int(l_1602_set * SET_TO_TIN_RATIO)} 罐", "紙張記錄（AI 提取）": f"{int(p_1602_tin)} 罐", "對賬狀態": get_status(p_1602_tin, l_1602_set * SET_TO_TIN_RATIO, "罐")})
