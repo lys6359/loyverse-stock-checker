@@ -1,3 +1,2 @@
 pandas
-openpyxl
-easyocr
+google-cloud-vision
