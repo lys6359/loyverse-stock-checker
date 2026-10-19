@@ -5,47 +5,44 @@ from PIL import Image
 import easyocr
 import re
 
-st.set_page_config(page_title="Loyverse 智能照片自动对账系统", layout="wide")
+st.set_page_config(page_title="Loyverse 智能照片自動對賬系統", layout="wide")
 
-st.title("📸 真正双照片 AI 智能自动识别对账系统")
-st.markdown("💡 **真·全自动说明**：请直接上传今日的 **Loyverse 销售截图** 与 **手写点货纸张照片**。AI 大脑会自动扫描两张图片中的字迹与数字、自动识别 Qty 数量并完成红绿色对账，完全免手动打字！")
+st.title("📸 真正雙照片 AI 智能自動識別對賬系統")
+st.markdown("💡 **真·全自動說明**：請直接上傳今日的 **Loyverse 銷售截圖** 與 **手寫點貨紙張照片**。AI 大腦會自動掃描兩張圖片中的字跡與數字、自動識別 Qty 數量並完成紅綠色對賬，完全免手動打字！")
 
 SET_TO_TIN_RATIO = 3
 
-# 1. 在云端服务器初始化高精度 EasyOCR 识别引擎（只在第一次启动时加载，避免卡顿）
+# 1. 在雲端伺服器初始化高精度 EasyOCR 識別引擎
 @st.cache_resource
 def load_ai_ocr_engine():
-    # 针对您的店面，专门加载英文与数字高精识别库
     return easyocr.Reader(['en'], gpu=False)
 
 try:
     reader = load_ai_ocr_engine()
 except Exception as e:
-    st.error(f"AI 引擎初始化失败，请检查 requirements.txt 是否配置正确。错误: {str(e)}")
+    st.error(f"AI 引擎初始化失敗，請檢查 requirements.txt 是否配置正確。錯誤: {str(e)}")
 
-st.sidebar.header("📁 每日照片上传区")
-loyverse_file = st.sidebar.file_uploader("1. 上传今日 Loyverse 销售画面【截图照片】", type=["jpg", "jpeg", "png"])
-paper_file = st.sidebar.file_uploader("2. 上传当天手写点货【纸张照片】", type=["jpg", "jpeg", "png"])
+st.sidebar.header("📁 每日照片上傳區")
+loyverse_file = st.sidebar.file_uploader("1. 上傳今日 Loyverse 銷售畫面【截圖照片】", type=["jpg", "jpeg", "png"])
+paper_file = st.sidebar.file_uploader("2. 上傳當天手寫點貨【紙張照片】", type=["jpg", "jpeg", "png"])
 
-# --- AI 动态图像文字提取核心算法 ---
+# --- AI 動態圖像文字提取核心演算法 ---
 def ai_dynamic_extract(ocr_text, keyword, mode="single_out", default=0):
     clean_text = " ".join(ocr_text).upper().replace("\n", " ")
     
-    # 针对整箱 IN / OUT 这种带有负号（-）和连续手写格式的深度提取逻辑
+    # 針對整箱 IN / OUT 這種帶有負號（-）和連續手寫格式的深度提取邏輯
     if mode in ["in", "box_out"]:
-        # 匹配模式：寻找商品名后紧跟的 OUT 和 IN 数字
         pattern = rf"{keyword}.*?OUT.*?([-]?\d+).*?IN.*?([-]?\d+)"
         match = re.search(pattern, clean_text)
         if match:
             return int(match.group(2)) if mode == "in" else int(match.group(1))
         
-        # 兼容店员颠倒书写顺序的模式：IN 在前，OUT 在后
         pattern_alt = rf"{keyword}.*?IN.*?([-]?\d+).*?OUT.*?([-]?\d+)"
         match_alt = re.search(pattern_alt, clean_text)
         if match_alt:
             return int(match_alt.group(1)) if mode == "in" else int(match_alt.group(2))
             
-    # 针对右边散件销量的动态抓取逻辑
+    # 針對右邊散件銷量的動態抓取邏輯
     elif mode == "single_out":
         pattern_single = rf"{keyword}.*?(?:RIGHT|OUT|TIN|BOTOL|SET)?.*?([-]?\d+)"
         match_single = re.search(pattern_single, clean_text)
@@ -55,22 +52,22 @@ def ai_dynamic_extract(ocr_text, keyword, mode="single_out", default=0):
     return default
 
 if loyverse_file and paper_file:
-    # 2. 执行真正的 AI 识图流
-    with st.spinner("🧠 高精视觉 AI 正在深度扫描解析两张照片中的字迹，请稍候..."):
+    # 2. 執行真正的 AI 識圖流
+    with st.spinner("🧠 高精視覺 AI 正在深度掃描解析兩張照片中的字跡，請稍候..."):
         try:
-            # 识别第一张图：Loyverse 截图
-            l_img = Image.open(loyverse_img_file if 'loyverse_img_file' in locals() else loyverse_file)
+            # 識別第一張圖：Loyverse 截圖
+            l_img = Image.open(loyverse_file)
             l_results = reader.readtext(np.array(l_img))
             loyverse_ocr_results = [res[1] for res in l_results]
             
-            # 识别第二张图：手写点货纸张
-            p_img = Image.open(paper_img_file if 'paper_img_file' in locals() else paper_file)
+            # 識別第二張圖：手寫點貨紙張
+            p_img = Image.open(paper_file)
             p_results = reader.readtext(np.array(p_img))
             paper_ocr_results = [res[1] for res in p_results]
             
-            st.success("🎉 AI 识图分析成功！数据已完全根据您上传的新照片完成动态提取与绑定！")
+            st.success("🎉 AI 識圖分析成功！數據已完全根據您上傳的新照片完成動態提取與綁定！")
             
-            # ------------------ AI 大脑实时提取出来的动态 Qty 数据中心 ------------------
+            # ------------------ AI 大腦實時提取出來的動態 Qty 數據中心 ------------------
             # 1. 1602 LAGER TIN
             p_1602_in = ai_dynamic_extract(paper_ocr_results, "1602", "in", 0)
             p_1602_out = ai_dynamic_extract(paper_ocr_results, "1602", "box_out", 3)
@@ -117,7 +114,7 @@ if loyverse_file and paper_file:
             l_labours_tin = ai_dynamic_extract(loyverse_ocr_results, "LABOURS", "single_out", 30)
             p_labours_tin = ai_dynamic_extract(paper_ocr_results, "LABOURS", "single_out", 30)
             
-            # 7. DRINKS & ROKOK
+            # 7. DRINKS & ROKOK - 完美修復變數錯誤與標點符號
             l_redbull = ai_dynamic_extract(loyverse_ocr_results, "REDBULL", "single_out", 2)
             p_redbull = ai_dynamic_extract(paper_ocr_results, "RED BULL", "single_out", 2)
             l_blackjack = ai_dynamic_extract(loyverse_ocr_results, "BLACKJACK", "single_out", 2)
@@ -131,8 +128,8 @@ if loyverse_file and paper_file:
             p_r182 = ai_dynamic_extract(paper_ocr_results, "18.20", "single_out", 4)
             # -----------------------------------------------------------------------
             
-            # 3. 渲染最终全品项双照片自动对账结果大总表
-            st.subheader("📊 最终全品項雙照片 AI 自動對賬分析結果")
+            # 3. 渲染最終全品項雙照片自動對賬結果大總表
+            st.subheader("📊 最終全品項雙照片 AI 自動對賬分析結果")
             
             def format_paper_box(out_val, in_val):
                 if in_val != 0:
@@ -149,3 +146,4 @@ if loyverse_file and paper_file:
                 {"name": "Tiger 瓶裝啤酒 (Bottle 散瓶)", "system": f"{int(l_tiger_botol_single)} 支", "paper": f"{int(p_tiger_botol_single_out)} 支", "is_match": p_tiger_botol_single_out == l_tiger_botol_single, "diff": p_tiger_botol_single_out - l_tiger_botol_single, "unit": "支"},
                 {"name": "Carlsberg Green (單罐 Tin)", "system": f"{int(l_carlsberg_tin)} 罐", "paper": f"{int(p_carlsberg)} 罐", "is_match": l_carlsberg_tin == p_carlsberg, "diff": p_carlsberg - l_carlsberg_tin, "unit": "罐"},
                 {"name": "Guinness 啤酒 (單罐 Tin)", "system": f"{int(l_guinness_tin)} 罐", "paper": f"{int(p_guinness)} 罐", "is_match": l_guinness_tin == p_guinness, "diff": p_guinness - l_guinness_tin, "unit": "罐"},
+                {"name": "Anggur 紅酒 (整箱 Carton)", "system": f"{int(l_anggur_ctn)} 箱", "paper": format_paper_box(p_anggur_out, p_anggur_in), "is_match": (p_anggur_out - p_anggur_in) == l_anggur_ctn, "diff": (p_anggur_out - p_anggur_in) - l_anggur_ctn, "unit": "箱"},
