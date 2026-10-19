@@ -23,8 +23,9 @@ if loyverse_img_file and paper_img_file:
         p_heineken_botol_ctn = st.number_input("紙張左邊：HEINEKEN BOTOL 箱數", min_value=-50, max_value=100, value=0)
         l_heineken_botol_ctn = st.number_input("Loyverse：HEINEKEN BOTOL 箱數", min_value=0, value=0)
         
-        p_tiger_botol_ctn = st.number_input("紙張左邊：TIGER BOTOL 箱數", min_value=-50, max_value=100, value=1)
-        l_tiger_botol_ctn = st.number_input("Loyverse：TIGER BOTOL 箱數", min_value=0, value=1)
+        # 修正：將 5 箱和 1 箱合併至瓶裝酒（每箱 12 瓶的 Tiger Botol）
+        p_tiger_botol_ctn = st.number_input("紙張左邊：TIGER BOTOL 箱數", min_value=-50, max_value=100, value=5)
+        l_tiger_botol_ctn = st.number_input("Loyverse：TIGER BOTOL 箱數", min_value=0, value=5)
         
         p_anchor_botol_ctn = st.number_input("紙張左邊：ANCHOR BOTOL 箱數", min_value=-50, max_value=100, value=0)
         l_anchor_botol_ctn = st.number_input("Loyverse：ANCHOR BOTOL 箱數", min_value=0, value=0)
@@ -36,11 +37,11 @@ if loyverse_img_file and paper_img_file:
         p_anchor_ctn = st.number_input("紙張左邊：ANCHOR TIN 箱數", min_value=-50, max_value=100, value=0)
         l_anchor_ctn = st.number_input("Loyverse：ANCHOR TIN 箱數", min_value=0, value=5)
         
-        p_tiger_ctn = st.number_input("紙張左邊：TIGER TIN 箱數", min_value=-50, max_value=100, value=5)
-        l_tiger_ctn = st.number_input("Loyverse：TIGER TIN 箱數", min_value=0, value=5)
+        # 修正：Tiger 罐裝當天是 0 箱
+        p_tiger_ctn = st.number_input("紙張左邊：TIGER TIN 箱數", min_value=-50, max_value=100, value=0)
+        l_tiger_ctn = st.number_input("Loyverse：TIGER TIN 箱數", min_value=0, value=0)
 
         st.write("**【能量飲/調酒/紅酒類 - 每箱12件】**")
-        # Anggur 箱裝成功歸入此類
         p_anggur_ctn = st.number_input("紙張左邊：ANGGUR 紅酒箱數", min_value=-50, max_value=100, value=-1)
         l_anggur_ctn = st.number_input("Loyverse：ANGGUR 紅酒箱數", min_value=-50, value=-1)
         
@@ -56,8 +57,9 @@ if loyverse_img_file and paper_img_file:
         p_anchor_tin = st.number_input("紙張右邊：ANCHOR TIN 罐數", min_value=0, value=3)
         l_anchor_set = st.number_input("Loyverse：Anchor 賣出組數 (1Set=3罐)", min_value=0, value=1)
         
-        p_tiger_tin = st.number_input("紙張右邊：TIGER TIN 罐數", min_value=0, value=1)
-        l_tiger_tin_single = st.number_input("Loyverse：Tiger 賣出單罐數", min_value=0, value=1)
+        # 修正：Tiger Tin 系統賣出 4 Set，換算成 12 罐
+        p_tiger_tin = st.number_input("紙張右邊：TIGER TIN 罐數", min_value=0, value=12)
+        l_tiger_set = st.number_input("Loyverse：Tiger 賣出組數 (1Set=3罐)", min_value=0, value=4)
         
         p_carlsberg_tin = st.number_input("紙張右邊：CARLSBERG GREEN TIN 罐數", min_value=0, value=3)
         l_carlsberg_tin = st.number_input("Loyverse：Carlsberg Green 賣出罐數", min_value=0, value=3)
@@ -103,7 +105,7 @@ if loyverse_img_file and paper_img_file:
         {"name": "Anchor 啤酒 (整箱 Carton - 24罐/箱)", "system": l_anchor_ctn, "paper": p_anchor_ctn, "unit": "箱"},
         {"name": "Anchor 啤酒 (單罐 Tin - 系統自動換算 1 Set = 3罐)", "system": l_anchor_set * SET_TO_TIN_RATIO, "paper": p_anchor_tin, "unit": "罐"},
         {"name": "Tiger 罐裝啤酒 (整箱 Carton - 24罐/箱)", "system": l_tiger_ctn, "paper": p_tiger_ctn, "unit": "箱"},
-        {"name": "Tiger 罐裝啤酒 (單罐 Tin)", "system": l_tiger_tin_single, "paper": p_tiger_tin, "unit": "罐"},
+        {"name": "Tiger 罐裝啤酒 (單罐 Tin - 系統自動換算 1 Set = 3罐)", "system": l_tiger_set * SET_TO_TIN_RATIO, "paper": p_tiger_tin, "unit": "罐"},
         {"name": "Tiger 瓶裝啤酒 (整箱 Carton - 12瓶/箱)", "system": l_tiger_botol_ctn, "paper": p_tiger_botol_ctn, "unit": "箱"},
         {"name": "Carlsberg Green (單罐 Tin)", "system": l_carlsberg_tin, "paper": p_carlsberg_tin, "unit": "罐"},
         {"name": "Guinness 啤酒 (單罐 Tin)", "system": l_guinness_tin, "paper": p_guinness_tin, "unit": "罐"},
